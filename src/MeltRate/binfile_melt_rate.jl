@@ -22,11 +22,12 @@ function update_melt_rate!(melt_model::BinfileMeltRate, fields, grid, clock)
     (file_size == sizeof(melt_rate)) || throw(DimensionMismatch("Size of input file incompatible with specified nx, ny"))
     try 
         read!(input_filename, melt_rate)
+        melt_rate .= ntoh.(melt_rate);
     catch
         Error("Input file read error")
     end
 
-   # melt_rate .= ntoh.(melt_rate)
+ #   melt_rate .= ntoh.(melt_rate)
     basal_melt[:] = melt_rate[:]
     return nothing
 end
